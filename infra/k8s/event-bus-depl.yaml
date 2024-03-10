@@ -14,5 +14,18 @@ spec:
     spec:
       containers:
         - name: event-bus
-          image: hyeongeol/msa-event-bus
-          imagePullPolicy: IfNotPresent
+          image: hyeongeol/msa-event-bus # docker hub에 등록된 이미지
+          imagePullPolicy: IfNotPresent # docker hub에 없는 경우 로컬
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: event-bus-cluster-srv
+spec:
+  selector:
+    app: event-bus
+  ports:
+    - name: event-bus
+      protocol: TCP
+      port: 4005 # nodePort
+      targetPort: 4005
