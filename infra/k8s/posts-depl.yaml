@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: posts-depl
 spec:
-  replicas: 1 # 1개의 이미지에 대해 1개 pod을 생성
+  replicas: 1
   selector:
     matchLabels:
       app: posts
@@ -14,19 +14,17 @@ spec:
     spec:
       containers:
         - name: posts
-          image: hyeongeol/msa-posts
-          imagePullPolicy: IfNotPresent # 로컬 docker 에서만 이미지를 찾음
---- 
+          image: hyeongeol/posts
+---
 apiVersion: v1
 kind: Service
 metadata:
-  name: post-cluster-srv
+  name: posts-srv
 spec:
   selector:
     app: posts
   ports:
     - name: posts
       protocol: TCP
-      port: 4000 # nodePort
+      port: 4000
       targetPort: 4000
-

@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: queries-depl
 spec:
-  replicas: 1 # 1개의 이미지에 대해 1개 pod을 생성
+  replicas: 1
   selector:
     matchLabels:
       app: queries
@@ -14,18 +14,17 @@ spec:
     spec:
       containers:
         - name: queries
-          image: hyeongeol/msa-queries # docker hub에 등록된 이미지
-          imagePullPolicy: IfNotPresent # docker hub에 없는 경우 로컬
+          image: hyeongeol/queries
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: queries-cluster-srv
+  name: queries-srv
 spec:
   selector:
     app: queries
   ports:
     - name: queries
       protocol: TCP
-      port: 4002 # nodePort
+      port: 4002
       targetPort: 4002

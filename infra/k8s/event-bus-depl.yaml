@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: event-bus-depl
 spec:
-  replicas: 1 # 1개의 이미지에 대해 1개 pod을 생성
+  replicas: 1
   selector:
     matchLabels:
       app: event-bus
@@ -14,18 +14,18 @@ spec:
     spec:
       containers:
         - name: event-bus
-          image: hyeongeol/msa-event-bus # docker hub에 등록된 이미지
-          imagePullPolicy: IfNotPresent # docker hub에 없는 경우 로컬
+          image: hyeongeol/event-bus
+          imagePullPolicy: Always
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: event-bus-cluster-srv
+  name: event-bus-srv
 spec:
   selector:
     app: event-bus
   ports:
     - name: event-bus
       protocol: TCP
-      port: 4005 # nodePort
+      port: 4005
       targetPort: 4005

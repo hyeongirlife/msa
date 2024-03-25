@@ -7,18 +7,18 @@ app.use(express.json());
 app.post("/events", (req, res) => {
   const event = req.body;
 
-  axios.post("http://post-cluster-srv:4000/events", event).catch((err) => {
+  axios.post("http://posts-srv:4000/events", event).catch((err) => {
     console.log("Post Service Error!", err.message);
   });
-  // axios.post("http://localhost:4001/events", event).catch((err) => {
-  //   console.log("Comment Service Error!", err.message);
-  // });
-  // axios.post("http://localhost:4002/events", event).catch((err) => {
-  //   console.log("Query Service Error!", err.message);
-  // });
-  // axios.post("http://localhost:4003/events", event).catch((err) => {
-  //   console.log("Moderation Service Error!", err.message);
-  // });
+  axios.post("http://comments-srv:4001/events", event).catch((err) => {
+    console.log("Comment Service Error!", err.message);
+  });
+  axios.post("http://queries-srv:4002/events", event).catch((err) => {
+    console.log("Query Service Error!", err.message);
+  });
+  axios.post("http://moderations-srv:4003/events", event).catch((err) => {
+    console.log("Moderation Service Error!", err.message);
+  });
   res.send({ status: "OK" });
 });
 

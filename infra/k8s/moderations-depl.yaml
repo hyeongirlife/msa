@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: moderations-depl
 spec:
-  replicas: 1 # 1개의 이미지에 대해 1개 pod을 생성
+  replicas: 1
   selector:
     matchLabels:
       app: moderations
@@ -14,18 +14,17 @@ spec:
     spec:
       containers:
         - name: moderations
-          image: hyeongeol/msa-moderations # docker hub에 등록된 이미지
-          imagePullPolicy: IfNotPresent # docker hub에 없는 경우 로컬
+          image: hyeongeol/moderations
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: moderations-cluster-srv
+  name: moderations-srv
 spec:
   selector:
     app: moderations
   ports:
     - name: moderations
       protocol: TCP
-      port: 4003 # nodePort
+      port: 4003
       targetPort: 4003
