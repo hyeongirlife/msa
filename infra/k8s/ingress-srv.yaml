@@ -3,16 +3,38 @@ kind: Ingress
 metadata:
   name: ingress-srv
   annotations:
-    kubernetes.io/ingress.class: nginx ## 사용자 지정 컨트롤러가 라우팅 규칙을 이해하도록 도울 것이다.
+    nginx.ingress.kubernetes.io/use-regex: "true" ## 모든 경로에서 정규표현식을 쓸 수 있다.
 spec:
+  ingressClassName: nginx
   rules:
     - host: posts.com
       http:
         paths:
-          - path: /posts ## 해당 경로로 요청이 오면 4000번 포트로 이동시킨다.
+          - path: /posts/create
             pathType: Prefix
             backend:
               service:
                 name: posts-clusterip-srv
                 port:
                   number: 4000
+          - path: /posts
+            pathType: Prefix
+            backend:
+              service:
+                name: query-srv
+                port:
+                  number: 4002
+          - path: /posts/?(.*)/comments
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: comments-srv
+                port:
+                  number: 4001
+          - path: /?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: client-srv
+                port:
+                  number: 3000
