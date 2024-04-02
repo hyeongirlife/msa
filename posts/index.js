@@ -11,7 +11,7 @@ app.use(cors());
 const posts = {};
 
 app.get("/posts", (req, res) => {
-  console.log("포스트!!");
+  console.log("ping-pong");
   res.send(posts);
 });
 
