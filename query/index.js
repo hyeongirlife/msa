@@ -58,6 +58,6 @@ app.listen(4002, async () => {
       handleEvent(event.type, event.data);
     }
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 });

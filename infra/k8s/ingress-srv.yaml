@@ -21,7 +21,7 @@ spec:
           pathType: Prefix
           backend:
             service:
-              name: query-srv
+              name: queries-srv
               port:
                 number: 4002
         - path: /posts/?(.*)/comments
